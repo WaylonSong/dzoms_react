@@ -208,7 +208,7 @@ class YunyingbuPurchase extends React.Component {
         title: '采购数量',
         dataIndex: 'num',
         key:'num',
-        render:(text, record, index)=>(<InputNumber min={1} max={10} defaultValue={0} onChange={this.onScoreChange.bind(this,index)} />) 
+        render:(text, record, index)=>(<InputNumber min={1} defaultValue={0} onChange={this.onScoreChange.bind(this,index)} />) 
       },
       {
         title: '备注',

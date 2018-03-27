@@ -303,7 +303,7 @@ class YunyingbuIssue extends React.Component {
                     {getFieldDecorator('count', {
                       rules: [{ required: true, message: '必须是数字!' }], initialValue:1,
                     })(
-                        <InputNumber min={0} max={100}  onChange={this.onChange.bind(this)} />
+                        <InputNumber min={0}  onChange={this.onChange.bind(this)} />
                     )}
                 </FormItem>
               </Col> 

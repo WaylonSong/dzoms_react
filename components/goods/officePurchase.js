@@ -86,6 +86,7 @@ class OfficePurchase extends React.Component {
       // this.num=value;
       this.result.itemId=this.state.recData[index].itemId;
       this.result.num=value;
+      console.log(this.result);
   }
   onRemarkChange(index,value){
       var remark;
@@ -133,7 +134,7 @@ class OfficePurchase extends React.Component {
         title: '采购数量',
         dataIndex: 'num',
         key:'num',
-        render:(text, record, index)=>(<InputNumber min={1} max={10} defaultValue={0} onChange={this.onScoreChange.bind(this,index)} />) 
+        render:(text, record, index)=>(<InputNumber min={1} defaultValue={0} onChange={this.onScoreChange.bind(this,index)} />) 
       },{
         title: '备注',
         dataIndex: 'remark',
