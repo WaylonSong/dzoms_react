@@ -8,7 +8,8 @@ module.exports = function(app){
   		res.sendFile(basePath + '/pages/accident.html')
 	})
 	app.get(["/insuranceListInfo"], function(req, res) {
-	  res.send([
+	  res.send({
+	  	status:1, data:[
 	    {
 	      "id":0,
 	      "bdh":"PDAA201723010000100923",
@@ -60,7 +61,7 @@ module.exports = function(app){
 	      "zbf":"4125.64",
 	      "lrsj":"2017-05-28"
 	    }
-	  ]);
+	  ]});
 	})
 	
 	app.get(["/accidentListInfo"], function(req, res) {

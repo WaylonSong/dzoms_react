@@ -5,7 +5,7 @@ module.exports = {
   //记着发布时候要去掉devtools否则打包很大
   devtool: 'cheap-module-eval-source-map', 
   entry: {
-    // hot: 'webpack-hot-middleware/client',
+    hot: 'webpack-hot-middleware/client',
     kpAll: './entry/kpAll',
     processAll:'./entry/processAll',
     insuranceAll: './entry/insuranceAll',
@@ -43,7 +43,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test:/\.css$/,
+        test:/\.css$|\.less$/,
         use:["style-loader","css-loader"]
       },{
         test:/\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$|\.woff2$|\.eot$/,
@@ -54,6 +54,9 @@ module.exports = {
         use: [
           'babel-loader'
         ],
+        /*include: [
+          path.resolve('./entry', "app")
+        ],*/
       },
       {
           test: require.resolve('jquery'),

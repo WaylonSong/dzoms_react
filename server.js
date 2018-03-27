@@ -140,9 +140,9 @@ app.get("/ky/*", function(req, res) {
 //   var path = req.url.substring(req.url.indexOf("/DZOMS"));
 //   // var path = req.path;
 //   var headers = req.headers;
-//   headers.host = '192.168.3.2';
+//   headers.host = '127.0.0.1';
 //   var options = {
-//     host: '192.168.3.2',
+//     host: '127.0.0.1',
 //     port: 8082,
 //     path: path,
 //     method: 'GET',
@@ -163,7 +163,7 @@ app.get("/ky/*", function(req, res) {
 
 app.get("/DZOMS/*", function(req, res) {
   var path = req.path.substring(req.path.indexOf("/DZOMS"));
-  var url = 'http://192.168.3.2:8082'+path;
+  var url = 'http://127.0.0.1:8082'+path;
   request({
       url: url,
       method: "get",
@@ -176,7 +176,7 @@ app.get("/DZOMS/*", function(req, res) {
 
 app.post("/DZOMS/*", function(req, res) {
   var path = req.path.substring(req.path.indexOf("/DZOMS"));
-  var url = 'http://192.168.3.2:8082'+path;
+  var url = 'http://127.0.0.1:8082'+path;
   request({
       url: url,
       method: "POST",
@@ -189,7 +189,7 @@ app.post("/DZOMS/*", function(req, res) {
 
 app.put("/DZOMS/*", function(req, res) {
   var path = req.path.substring(req.path.indexOf("/DZOMS"));
-  var url = 'http://192.168.3.2:8082'+path;
+  var url = 'http://127.0.0.1:8082'+path;
   request({
       url: url,
       method: "PUT",
@@ -203,7 +203,7 @@ app.put("/DZOMS/*", function(req, res) {
 app.delete("/DZOMS/*", function(req, res) {
   //console.log(req.body)
   var path = req.path.substring(req.path.indexOf("/DZOMS"));
-  var url = 'http://192.168.3.2:8082' + path;
+  var url = 'http://127.0.0.1:8082' + path;
   //console.log(url)
   request({
       url: url,

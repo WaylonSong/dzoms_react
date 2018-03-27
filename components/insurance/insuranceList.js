@@ -6,6 +6,8 @@ import ReactDOM from 'react-dom';
 import { Table, Button, Modal, Form, Input, Icon,Row, Col,DatePicker} from 'antd';
 import Sorter from '../util/Sorter';
 import Filters from '../util/Filters';
+import SearchBar from '../common/SearchBar';
+import queryString from 'query-string'
 const FormItem = Form.Item;
 const { MonthPicker, RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
@@ -25,9 +27,14 @@ class InsuranceList extends React.Component {
   }
   async componentDidMount(){
         var self=this;
+        var params = '';
+        if(window.location.search)
+          params = window.location.search.substring(1);
+
         $.ajax({
             url:self.props.insuranceListInfoUrl,
             type:"get",
+            data:params,
             dataType: 'json',
             contentType : 'application/json',
             success:function(data){
@@ -36,7 +43,7 @@ class InsuranceList extends React.Component {
                   var data=data.data;
                   for(var i=0;i<data.length;i++){
                       data[i]["key"]=data[i].id;   
-                  }                   
+                  }
                   self.setState({
                       recData:data
                   }); 
@@ -50,36 +57,19 @@ class InsuranceList extends React.Component {
         });
   }
 
+  onFilterChange(){
+    console.log("filter changed");
+  }
+
   onTimeChange(date,dateString){
      dateString=dateString.replace('/', '-');
      this.setState({
           selectedTime:dateString
      });
   }
-
-  search(){
-      var self=this;
-      var selectedTime=self.state.selectedTime;
-      $.get(self.props.insuranceListInfoUrl+"?selectedTime="+selectedTime,function(data){
-          if (data.status > 0) {
-            var data = data.data;
-            for (var i = 0; i < data.length; i++) {
-              data[i]["key"] = data[i].id;
-            }
-            self.setState({
-              recData: data
-            });
-          } else {
-            recData: ""
-          }
-      });
-  }
-  download(){
-     window.location.href=this.props.downloadUrl;
-  }
+  
   render() { 
     var filterData = new Filters().filter(this.state.recData);
-    console.log(filterData);
     var columns = [
       {
         title: '序号',
@@ -152,13 +142,14 @@ class InsuranceList extends React.Component {
     const hasSelected = selectedRowKeys.length > 0;  
     return (
       <div>
-        <div style={{float:'right',marginBottom:'10px',position:'relative'}}>
+       {/* <div style={{float:'right',marginBottom:'10px',position:'relative'}}>
           <div style={{position:'absolute',top:'-55px',right:'65px'}} onClick={this.download.bind(this)}>
               <Icon type="download" style={{fontSize:'18px'}} />下载             
           </div>
           <MonthPicker onChange={this.onTimeChange.bind(this)}  format={monthFormat}  placeholder="日期选择"/>
           <Button onClick={this.search.bind(this)}>搜索</Button>
-        </div>
+        </div>*/}
+        <SearchBar options={[{field:'id', alias:'身份证'}, {field:'name', alias:'名称2'}]||this.props.options} downloadUrl={this.props.downloadUrl}/>
         <Table style={{clear:'both'}} key={this.key++}  columns={columns}  dataSource={this.state.recData} scroll={{ x: 1300}} />
       </div>
     );
