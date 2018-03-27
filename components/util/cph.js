@@ -59,10 +59,11 @@ class Cph extends React.Component{
         });*/
         let self=this;
         let wholeNumber = self.state.district+value;
+        var param = {number: wholeNumber}
         $.ajax({
             type:"get",
             url: self.props.chepaihao||'/chepaihaoA',
-            data: wholeNumber,
+            data: param,
             dataType: 'json',
             contentType : 'application/json',
             success: function(data){ 
