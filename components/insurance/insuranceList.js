@@ -149,7 +149,7 @@ class InsuranceList extends React.Component {
           <MonthPicker onChange={this.onTimeChange.bind(this)}  format={monthFormat}  placeholder="日期选择"/>
           <Button onClick={this.search.bind(this)}>搜索</Button>
         </div>*/}
-        <SearchBar options={[{field:'id', alias:'身份证'}, {field:'name', alias:'名称2'}]||this.props.options} downloadUrl={this.props.downloadUrl}/>
+        <SearchBar options={this.props.options||[{field:'id', alias:'身份证'}, {field:'name', alias:'名称2'}]} downloadUrl={this.props.downloadUrl}/>
         <Table style={{clear:'both'}} key={this.key++}  columns={columns}  dataSource={this.state.recData} scroll={{ x: 1300}} />
       </div>
     );

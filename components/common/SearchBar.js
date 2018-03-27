@@ -47,7 +47,7 @@ const SearchBar = ({
   }
 
   const download = () => {
-    window.open(downloadUrl)
+    window.open(downloadUrl+window.location.search)
   }
 
   const search = (fields) => {
