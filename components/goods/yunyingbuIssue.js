@@ -94,7 +94,8 @@ class YunyingbuIssue extends React.Component {
 	            // this.setState({ loading: false, visible: false });
 	            result=values;
 	            result["itemId"]=this.itemId;
-	            result.carId=this.objCph;
+	            result.carNumber=this.state.cph;
+              console.log(result)
               var self=this;
 	            $.ajax({
 	        	  //url: this.props.submitUrl+"/"+result.recipient+"/"+result.idNumber+"/"+result.carId+"/"+result.count+"/"+result.itemId,
