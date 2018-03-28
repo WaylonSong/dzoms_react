@@ -20,52 +20,84 @@ class Goods extends React.Component {
       this.itemId="";
       this.num="";
   }
-  async componentDidMount(){
-        var self=this;
-        $.ajax({
-            //url:"/goodsList",
-            url:this.props.goodsInfoUrl,
-            type:"get",
-            dataType: 'json',
-            contentType : 'application/json',
-            success:function(data){
-                if(data){
-                  var data=data.data;
-                  for(var i in data){
-                      data[i]["key"]=data[i].itemId;   
-                  }                   
-                  self.setState({
-                      recData:data
-                  }); 
-                }else{
-                   recData:""
-                }
-            }.bind(self),
-            error:function(){
-                alert("请求失败");
-            }
-        });
+  componentDidMount(){
+        this.fetchData();
+  }
+  fetchData(){
+    var self=this;
+    $.ajax({
+          //url:"/goodsList",
+          url:self.props.goodsInfoUrl,
+          type:"get",
+          dataType: 'json',
+          contentType : 'application/json',
+          success:function(data){
+              if(data){
+                var data = data.data;
+                for(var i in data){
+                    data[i]["key"]=data[i].itemId;   
+                }  
+                console.log(data);                 
+                self.setState({
+                    recData:data
+                }); 
+              }else{
+                 recData:""
+              }
+          }.bind(self),
+          error:function(){
+              alert("请求失败");
+          }
+      });
   }
   action(index){
-     console.log(this.itemId);
-     console.log(this.num);
-    if(this.num>0){
-        window.location.href=this.props.jumpUrl+"?itemId="+this.itemId+"&num="+this.num;    
-     }else{
-        Modal.error({
-          title: '错误信息',
-          content: '采购数量必须大于0',
-        });
-     } 
-     
+     let {itemId, num} = this.state.recData[index];
+     let reqData = {num, itemId};
+      var self=this;
+     $.ajax({
+          //url:"/goodsList",
+          url:self.props.goodsPurchaseUrl,
+          type:"post",
+          dataType: 'json',
+          data:JSON.stringify(reqData),
+          contentType : 'application/json',
+          success:function(data){
+              if(data.status > 0){
+                Modal.info({
+                  title: '提示',
+                  content: (
+                    <div>
+                      <p>入库成功！</p>
+                    </div>
+                  ),
+                  onOk() {},
+                });
+                self.fetchData();
+              }else{
+                Modal.info({
+                  title: '提示',
+                  content: (
+                    <div>
+                      <p>入库失败！</p>
+                    </div>
+                  ),
+                  onOk() {},
+                });
+              }
+          }.bind(self),
+          error:function(){
+              alert("请求失败");
+          }
+      });   
   }
   onScoreChange(index,value) {
       //console.log(this.state.recData);
-      console.log(index,value)
-      var itemId=this.state.recData[index].itemId;
-      this.itemId=itemId;
-      this.num=value;
+     // console.log(index,value)
+    var newData = [...this.state.recData];
+    newData[index].num = value;
+    this.setState({ recData: newData });
   }
+
   render() { 
     var filterData = new Filters().filter(this.state.recData);
     var columns = [

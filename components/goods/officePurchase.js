@@ -86,7 +86,6 @@ class OfficePurchase extends React.Component {
       // this.num=value;
       this.result.itemId=this.state.recData[index].itemId;
       this.result.num=value;
-      console.log(this.result);
   }
   onRemarkChange(index,value){
       var remark;

@@ -128,8 +128,8 @@ class YunyingbuPurchase extends React.Component {
       });
   }
   action(index){
-     let {num, itemRemarks} = this.state.recData[index];
-     let reqData = {num, itemRemarks};
+     let {itemId, num, itemRemarks} = this.state.recData[index];
+     let reqData = {num, itemRemarks, itemId};
       var self=this;
      $.ajax({
           //url:"/goodsList",
