@@ -251,7 +251,7 @@ class YunyingbuIssue extends React.Component {
 
     return (
       <div>
-        <Row type="flex" gutter={24}><Col style={{marginTop:7, marginLeft:10, marginRight:-25}}>请先填入领用车牌号：</Col><Col span={8}><Cph onChange={this.cphChange.bind(this)}/></Col></Row>
+        <Row type="flex" gutter={24}><Col style={{marginTop:7, marginLeft:10, marginRight:-25}}>请先填入领用车牌号：</Col><Col span={8}><Cph chepaihao={this.props.chepaihao} onChange={this.cphChange.bind(this)}/></Col></Row>
         <Table  key='yunyingbuIssue' size="default" columns={columns}  pagination={false} dataSource={this.state.recData} loading={this.state.loading}/>
         {this.state.visible&&
         <Modal

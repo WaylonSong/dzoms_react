@@ -62,7 +62,7 @@ class Cph extends React.Component{
         var param = {number: wholeNumber}
         $.ajax({
             type:"get",
-            url: self.props.chepaihao||'/chepaihaoA',
+            url: self.props.chepaihao,
             data: param,
             dataType: 'json',
             contentType : 'application/json',
