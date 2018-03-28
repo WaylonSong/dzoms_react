@@ -6,7 +6,8 @@ import ReactDOM from 'react-dom';
 import { Table, Modal} from 'antd';
 import Sorter from '../util/Sorter';
 import Filters from '../util/Filters';
-class GoodsIssueHisInfo extends React.Component {
+import SearchBar from '../common/SearchBar';
+class YunyingbuHistory extends React.Component {
  constructor(props) {
       super(props);
       this.state = {
@@ -15,15 +16,18 @@ class GoodsIssueHisInfo extends React.Component {
   }
   async componentDidMount(){
         console.log(this.props.goodsIssueHisInfoUrl);
+        var params = '';
+        if(window.location.search)
+          params = window.location.search.substring(1);
+
         $.ajax({
             url:this.props.goodsIssueHisInfoUrl,
             type:"get",
             dataType: 'json',
+            data: params,
             contentType : 'application/json',
             success:function(data){
                 if(data.status>0){
-                  console.log("aaaa");
-                  console.log(data);
                   var data=data.data;
                   for(var i in data){
                       data[i]["key"]=data[i].itemId;   
@@ -81,15 +85,23 @@ class GoodsIssueHisInfo extends React.Component {
         filters: filterData.count,
         sorter: (a, b) => (new Sorter().sort(a.count, b.count)),
         onFilter: (value, record) => record.count.indexOf(value) === 0
+      },{
+        title: '领用时间',
+        dataIndex: 'time',
+        key:'time',
+        filters: filterData.time,
+        sorter: (a, b) => (new Sorter().sort(a.time, b.time)),
+        onFilter: (value, record) => record.time.indexOf(value) === 0
       }
     ];       
     return (
       <div>
+        <SearchBar options={this.props.options||[{field:'carNumber', alias:'车牌号'},{field:'idNumber', alias:'身份证'}, {field:'personName', alias:'姓名'}, {field:'itemName', alias:'物品名称'}]} downloadUrl={this.props.downloadUrl}/>
         <Table  key={this.key++} pagination={false} columns={columns}  dataSource={this.state.recData} />
       </div>
     );
   }
 }
-if(document.getElementById("goodsIssueHisInfo"))
-   ReactDOM.render(<GoodsIssueHisInfo {...pageUrls} />, document.getElementById("goodsIssueHisInfo"));
-export default GoodsIssueHisInfo;
+if(document.getElementById("yunyingbuHistory"))
+   ReactDOM.render(<YunyingbuHistory {...pageUrls} />, document.getElementById("yunyingbuHistory"));
+export default YunyingbuHistory;

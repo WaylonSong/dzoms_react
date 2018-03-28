@@ -67,13 +67,13 @@ class Cph extends React.Component{
             dataType: 'json',
             contentType : 'application/json',
             success: function(data){ 
-                data = data.map(function(i){
+                var data2 = data.data.map(function(i){
                   if(i.indexOf('黑')>-1)
                     return i.substring(2);
                   return i;
                 })
                 self.setState({
-                    dataSource:data
+                    dataSource:data2
                 });                            
             },
             error: function(data){

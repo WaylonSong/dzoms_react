@@ -7,11 +7,17 @@ module.exports = function(app) {
 	app.get("/officePurchase", function(req, res) {
 		res.sendFile(basePath + '/pages/goods/officePurchase.html')
 	})
+	app.get("/officeHistory", function(req, res) {
+		res.sendFile(basePath + '/pages/goods/officeHistory.html')
+	})
 	app.get("/yunyingbuIssue", function(req, res) {
 		res.sendFile(basePath + '/pages/goods/yunyingbuIssue.html')
 	})
 	app.get("/yunyingbuPurchase", function(req, res) {
 		res.sendFile(basePath + '/pages/goods/yunyingbuPurchase.html')
+	})
+	app.get("/yunyingbuHistory", function(req, res) {
+		res.sendFile(basePath + '/pages/goods/yunyingbuHistory.html')
 	})
 	app.get("/goodsManagement", function(req, res) {
 		res.sendFile(basePath + '/pages/goods/goodsManagement.html')
@@ -22,7 +28,7 @@ module.exports = function(app) {
 
 	app.get(["/chepaihaoA"], function(req, res) {
 		// res.send(["780LK", "SW110", "IL363", "IL373", "SQ001", "BQ002", "SQ021", "SQ101", "SQ031", "SQ801", "BQ802"]);
-		res.send(["黑A780LK", "黑ASW110", "黑AIL363", "黑AIL373", "黑ASQ001", "黑ABQ002", "黑ASQ021"]);
+		res.send({status:1, data:["黑A780LK", "黑ASW110", "黑AIL363", "黑AIL373", "黑ASQ001", "黑ABQ002", "黑ASQ021"]});
 	})
 
 	app.post(["/goodsPurchase"], function(req, res) {
@@ -156,6 +162,106 @@ module.exports = function(app) {
 			}]
 		});
 	})
+
+	app.get(["/yunyingbu/goods/history"], function(req, res) {
+    res.send(
+      {
+          "status":1,
+          "message":"查询成功",
+          "data":[
+         {"id":11,
+         "personName":"黄嵩凯",
+         "itemName":"座套",
+         "idNumber":"232301199501208855",
+         "carId":"黑A12450",
+         "count":"5",
+					time: "2018-01-01 12:12:12"
+         },
+         {"id":12,
+         "personName":"黄嵩凯1",
+         "itemName":"座套",
+         "idNumber":"232301199501208855",
+         "carId":"黑A12450",
+         "count":"5",
+					time: "2018-01-01 12:12:12"
+         },
+         {"id":15,
+         "personName":"黄嵩凯2",
+         "itemName":"座套",
+         "idNumber":"232301199501208855",
+         "carId":"黑A12450",
+         "count":"5",
+					time: "2018-01-01 12:12:12"
+         },
+         {"id":16,
+         "personName":"黄嵩凯3",
+         "itemName":"座套",
+         "idNumber":"232301199501208855",
+         "carId":"黑A12450",
+         "count":"5",
+					time: "2018-01-01 12:12:12"
+         },
+         {"id":17,
+         "personName":"黄嵩凯",
+         "itemName":"座套",
+         "idNumber":"232301199501208855",
+         "carId":"黑A12450",
+         "count":"5",
+					time: "2018-01-01 12:12:12"
+         },
+         {"id":18,
+         "personName":"黄嵩凯1",
+         "itemName":"座套",
+         "idNumber":"232301199501208855",
+         "carId":"黑A12450",
+         "count":"5",
+					time: "2018-01-01 12:12:12"
+         },
+         {"id":19,
+         "personName":"黄嵩凯2",
+         "itemName":"座套",
+         "idNumber":"232301199501208855",
+         "carId":"黑A12450",
+         "count":"5",
+					time: "2018-01-01 12:12:12"
+         },
+         {"id":20,
+         "personName":"黄嵩凯3",
+         "itemName":"座套",
+         "idNumber":"232301199501208855",
+         "carId":"黑A12450",
+         "count":"5",
+					time: "2018-01-01 12:12:12"
+         }         
+          ] 
+        }
+      );
+});
+	app.get(["/office/goods/history"], function(req, res) {
+    res.send(
+      {
+          "status":1,
+          "message":"查询成功",
+          "data":[
+         {"id":11,
+         "personName":"黄嵩凯",
+         "itemName":"铅笔",
+         "department":"信息部",
+         "count":"5",
+					time: "2018-01-01 12:12:12"
+         },
+         {"id":12,
+         "personName":"黄嵩凯1",
+         "itemName":"橡皮",
+         "department":"运营部",
+         "count":"5",
+					time: "2018-01-01 12:12:12"
+         },
+          ] 
+        }
+      );
+});
+
 
 	app.post(["/updateStorage"], function(req, res) {
 		res.send({

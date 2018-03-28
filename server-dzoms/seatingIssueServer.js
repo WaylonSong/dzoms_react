@@ -9,9 +9,6 @@ module.exports = function(app){
       res.sendFile(basePath + '/pages/seatingIssueHisInfo.html')
   })
 
-	app.get(["/chepaihaoA"], function(req, res) {
-  		res.send(["780LK","SW110","IL363","IL373","SQ001","BQ002","SQ021","SQ101","SQ031","SQ801","BQ802"]);
-	})
   app.post(["/test"], function(req, res) {
       res.send({
         data:[],
