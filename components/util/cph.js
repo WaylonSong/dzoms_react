@@ -101,7 +101,7 @@ class Cph extends React.Component{
     }
     render(){    
         return(
-          <InputGroup compact style={{margin:5}}>
+          <InputGroup compact style={{margin:5,height:40, width:350, overflow:'hidden'}}>
             <Select defaultValue="黑A" onChange={this.districtChange.bind(this)}>
               <Option value="黑A">黑A</Option>
               <Option value="黑B">黑B</Option>
