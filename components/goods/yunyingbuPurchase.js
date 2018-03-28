@@ -96,55 +96,83 @@ class YunyingbuPurchase extends React.Component {
           recData:[],  //从后台接收到的数据
           updateStorageIndex:""
       };
-      this.key=0;
-      this.itemId="";
-      this.num="";
   }
   componentDidMount(){
-        var self=this;
-        $.ajax({
-            //url:"/goodsList",
-            url:self.props.goodsInfoUrl,
-            type:"get",
-            dataType: 'json',
-            contentType : 'application/json',
-            success:function(data){
-                if(data){
-                  var data=data.data;
-                  for(var i in data){
-                      data[i]["key"]=data[i].itemId;   
-                  }                   
-                  self.setState({
-                      recData:data
-                  }); 
-                }else{
-                   recData:""
-                }
-            }.bind(self),
-            error:function(){
-                alert("请求失败");
-            }
-        });
+        this.fetchData();
+  }
+  fetchData(){
+    var self=this;
+    $.ajax({
+          //url:"/goodsList",
+          url:self.props.goodsInfoUrl,
+          type:"get",
+          dataType: 'json',
+          contentType : 'application/json',
+          success:function(data){
+              if(data){
+                var data = data.data;
+                for(var i in data){
+                    data[i]["key"]=data[i].itemId;   
+                }  
+                console.log(data);                 
+                self.setState({
+                    recData:data
+                }); 
+              }else{
+                 recData:""
+              }
+          }.bind(self),
+          error:function(){
+              alert("请求失败");
+          }
+      });
   }
   action(index){
-     //console.log(this.itemId);
-     //console.log(this.num);
-     if(this.num>0){
-        window.location.href=this.props.jumpUrl+"?itemId="+this.itemId+"&num="+this.num;  
-     }else{
-        Modal.error({
-          title: '错误信息',
-          content: '采购数量必须大于0',
-        });
-     }
-        
+     let {num, itemRemarks} = this.state.recData[index];
+     let reqData = {num, itemRemarks};
+      var self=this;
+     $.ajax({
+          //url:"/goodsList",
+          url:self.props.goodsPurchaseUrl,
+          type:"post",
+          dataType: 'json',
+          data:JSON.stringify(reqData),
+          contentType : 'application/json',
+          success:function(data){
+              if(data.status > 0){
+                Modal.info({
+                  title: '提示',
+                  content: (
+                    <div>
+                      <p>入库成功！</p>
+                    </div>
+                  ),
+                  onOk() {},
+                });
+                self.fetchData();
+              }else{
+                Modal.info({
+                  title: '提示',
+                  content: (
+                    <div>
+                      <p>入库失败！</p>
+                    </div>
+                  ),
+                  onOk() {},
+                });
+              }
+          }.bind(self),
+          error:function(){
+              alert("请求失败");
+          }
+      });   
   }
   onScoreChange(index,value) {
       //console.log(this.state.recData);
      // console.log(index,value)
-      var itemId=this.state.recData[index].itemId;
-      this.itemId=itemId;
-      this.num=value;
+    var newData = [...this.state.recData];
+    newData[index].num = value;
+    this.setState({ recData: newData });
   }
   onRemarkChange(index,value){
       var remark;
@@ -154,7 +182,9 @@ class YunyingbuPurchase extends React.Component {
       else{
         remark = value.target.value;
       }
-      console.log(index,remark) //传输数据方式待确认 拼接？ajax？
+      var newData = [...this.state.recData];
+      newData[index].itemRemarks = remark;
+      this.setState({ recData: newData });
   }
   //可编辑框 onchange
   onCellChange(index, value){
@@ -167,6 +197,7 @@ class YunyingbuPurchase extends React.Component {
     });
   }
   render() { 
+    console.log()
     var filterData = new Filters().filter(this.state.recData);
     var columns = [
       {
@@ -188,7 +219,7 @@ class YunyingbuPurchase extends React.Component {
         dataIndex: 'itemTotalNum',
         key:'itemTotalNum',
         sorter: (a, b) => (new Sorter().sort(a.itemTotalNum, b.itemTotalNum)),
-        render: (text, record, index) => (
+        /*render: (text, record, index) => (
           <EditableCell
             recData={this.state.recData}
             {...pageUrls}
@@ -196,7 +227,7 @@ class YunyingbuPurchase extends React.Component {
             index={index}
             onChange={this.onCellChange.bind(this,index)}
           />
-      )
+        )*/
       },{
         title: '单价',
         dataIndex: 'itemPurchasingPrice',
@@ -208,13 +239,13 @@ class YunyingbuPurchase extends React.Component {
         title: '采购数量',
         dataIndex: 'num',
         key:'num',
-        render:(text, record, index)=>(<InputNumber min={1} defaultValue={0} onChange={this.onScoreChange.bind(this,index)} />) 
+        render:(text, record, index)=>(<InputNumber min={0} defaultValue={0} onChange={this.onScoreChange.bind(this,index)} />) 
       },
       {
         title: '备注',
-        dataIndex: 'remark',
-        key:'remark',
-        render:(text, record, index)=>(<TextArea  autosize={{ minRows: 1}}  onChange={this.onRemarkChange.bind(this,index)} />) 
+        dataIndex: 'itemRemarks',
+        key:'itemRemarks',
+        render:(text, record, index)=>(<TextArea  autosize={{ minRows: 1}} defaultValue={text} onChange={this.onRemarkChange.bind(this,index)} />) 
       },
       {
         title: '采购',

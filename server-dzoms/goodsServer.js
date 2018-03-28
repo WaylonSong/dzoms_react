@@ -25,6 +25,14 @@ module.exports = function(app) {
 		res.send(["黑A780LK", "黑ASW110", "黑AIL363", "黑AIL373", "黑ASQ001", "黑ABQ002", "黑ASQ021"]);
 	})
 
+	app.post(["/goodsPurchase"], function(req, res) {
+		res.send({
+			"status": 1,
+			"message": "入库成功",
+			"data": []
+		});
+	})
+
 	app.get(["/goodsList"], function(req, res) {
 		res.send({
 			"status": 1,
@@ -33,7 +41,7 @@ module.exports = function(app) {
 				"itemId": 0,
 				"itemName": "零件1",
 				"itemType": "SYP7-2017-06",
-				"itemTotalNum": "150",
+				"itemTotalNum": "250",
 				"itemPurchasingPrice": "20",
 				"itemUnit": "个",
 				"itemRemarks": "零件1备注信息"
