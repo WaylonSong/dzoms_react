@@ -16,9 +16,6 @@ class Goods extends React.Component {
       this.state = {
           recData:[],  //从后台接收到的数据
       };
-      this.key=0;
-      this.itemId="";
-      this.num="";
   }
   componentDidMount(){
         this.fetchData();
@@ -53,32 +50,32 @@ class Goods extends React.Component {
   action(index){
      let {itemId, num} = this.state.recData[index];
      let reqData = {num, itemId};
-      var self=this;
+     var self=this;
      $.ajax({
           //url:"/goodsList",
-          url:self.props.goodsPurchaseUrl,
+          url:self.props.goodsIssueUrl,
           type:"post",
           dataType: 'json',
           data:JSON.stringify(reqData),
           contentType : 'application/json',
           success:function(data){
-              if(data.status > 0){
+              if(data&&data.status > 0){
                 Modal.info({
                   title: '提示',
                   content: (
                     <div>
-                      <p>入库成功！</p>
+                      <p>领用成功！</p>
                     </div>
                   ),
                   onOk() {},
                 });
                 self.fetchData();
               }else{
-                Modal.info({
+                Modal.error({
                   title: '提示',
                   content: (
                     <div>
-                      <p>入库失败！</p>
+                      <p>领用失败！</p>
                     </div>
                   ),
                   onOk() {},
@@ -86,13 +83,21 @@ class Goods extends React.Component {
               }
           }.bind(self),
           error:function(){
-              alert("请求失败");
+              Modal.error({
+                  title: '提示',
+                  content: (
+                    <div>
+                      <p>系统故障，领用失败！</p>
+                    </div>
+                  ),
+                  onOk() {},
+                });
           }
       });   
   }
   onScoreChange(index,value) {
       //console.log(this.state.recData);
-     // console.log(index,value)
+     console.log(index,value)
     var newData = [...this.state.recData];
     newData[index].num = value;
     this.setState({ recData: newData });
@@ -133,7 +138,7 @@ class Goods extends React.Component {
         title: '领用数量',
         dataIndex: 'num',
         key:'num',
-        render:(text, record, index)=>(<InputNumber min={1} max={10} defaultValue={0} onChange={this.onScoreChange.bind(this,index)} />) 
+        render:(text, record, index)=>(<InputNumber min={0} max={10} defaultValue={0} onChange={this.onScoreChange.bind(this,index)} />) 
       },{
         title: '操作',
         render:(text,record,index)=>(<Button onClick={this.action.bind(this,index)}>领用</Button>)
