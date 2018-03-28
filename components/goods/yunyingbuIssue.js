@@ -57,7 +57,6 @@ class YunyingbuIssue extends React.Component {
            });
         }
     });
-    console.log("加载列表");
   }
   async componentDidMount(){
     this.loadGoodsList();
@@ -251,7 +250,7 @@ class YunyingbuIssue extends React.Component {
 
     return (
       <div>
-        <Row type="flex" gutter={24}><Col style={{marginTop:7, marginLeft:10, marginRight:-25}}>请先填入领用车牌号：</Col><Col span={8}><Cph chepaihao={this.props.chepaihao} onChange={this.cphChange.bind(this)}/></Col></Row>
+        <div><div style={{float:'left',marginTop:7, marginLeft:10, marginRight:0}}>请先填入领用车牌号：</div><div><Cph chepaihao={this.props.chepaihao} onChange={this.cphChange.bind(this)}/></div></div>
         <Table  key='yunyingbuIssue' size="default" columns={columns}  pagination={false} dataSource={this.state.recData} loading={this.state.loading}/>
         {this.state.visible&&
         <Modal
