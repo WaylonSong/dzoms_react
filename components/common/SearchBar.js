@@ -107,7 +107,7 @@ const SearchBar = ({
             </Select>
             )}
             {getFieldDecorator('value',{initialValue:query[queryField]||''})(
-              <Search placeholder="搜索" style={{ width: '70%' }} size="large" onSearch={handleSubmit} />
+              <Search placeholder="搜索" style={{ width: '70%', height:28}} size="large" onSearch={handleSubmit} />
             )}
           </div>
         </Col>

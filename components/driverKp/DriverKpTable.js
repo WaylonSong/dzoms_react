@@ -364,6 +364,7 @@ class JiaShiYuanBaiFenTable extends React.Component{
         </Col>
         <Col lg={{ span: 4, offset: 0}} xs={{ span: 6, offset: 0}}>
             <Search
+              style={{height:28}}
               placeholder="输入人名或者车牌号搜索"
               onSearch={this.search.bind(this)}
               enterButton
