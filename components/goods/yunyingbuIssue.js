@@ -243,8 +243,8 @@ class YunyingbuIssue extends React.Component {
       ];
     }  
     const formItemLayout = {
-        labelCol: { span: 9 },
-        wrapperCol: { span: 15 },
+        /*labelCol: { span: 3 },
+        wrapperCol: { span: 6 },*/
     };
 
 
@@ -265,9 +265,7 @@ class YunyingbuIssue extends React.Component {
             </Button>
           ]}
         >
-          <Form layout="horizontal" >
-            <Row gutter={24}>
-              <Col span={8}>
+          <Form layout="inline" style={{marginBottom:20}}>
                 <FormItem
                     label="领用人："
                     {...formItemLayout}
@@ -275,15 +273,13 @@ class YunyingbuIssue extends React.Component {
                     {getFieldDecorator('recipient', {
                       rules: [{ required: true, message: '该字段不能为空!' }],
                     })(
-                      <Select onChange={this.driverChange.bind(this)}>
+                      <Select style={{width:200}} onChange={this.driverChange.bind(this)}>
                         {this.state.driversAndHistory.drivers.map(function(i){
                           return <Select.Option value={i.name}>{i.name}</Select.Option>
                         })}
                       </Select>
                     )}
                 </FormItem>
-              </Col>
-              <Col span={8}>
                 <FormItem
                     label="身份证："
                     {...formItemLayout}
@@ -294,8 +290,6 @@ class YunyingbuIssue extends React.Component {
                       <Input/>
                     )}
                 </FormItem>
-              </Col>
-              <Col span={8}>
                 <FormItem
                     label="数量:"
                     {...formItemLayout}
@@ -306,8 +300,6 @@ class YunyingbuIssue extends React.Component {
                         <InputNumber min={0}  onChange={this.onChange.bind(this)} />
                     )}
                 </FormItem>
-              </Col> 
-            </Row>  
           </Form>
           近3个月领用记录{this.state.driversAndHistory.history.length}条
           <Table key='history' size="default" columns={subColumns}  pagination={false} dataSource={this.state.driversAndHistory.history}></Table>

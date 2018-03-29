@@ -233,8 +233,8 @@ class AppModal extends React.Component {
     //console.log(this.props.url);
     var key = this.state.newKey;
     const formItemLayout = {
-        labelCol: { span: 4 },
-        wrapperCol: { span: 12 },
+       /* labelCol: { span: 4 },
+        wrapperCol: { span: 12 },*/
     };
     const { getFieldDecorator } = this.props.form;
     var br="<br>";
