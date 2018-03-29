@@ -3,10 +3,11 @@ import React, {
   PropTypes
 } from 'react';
 import ReactDOM from 'react-dom';
-import { Table, Modal} from 'antd';
+import { Table, Modal, Button} from 'antd';
 import Sorter from '../util/Sorter';
 import Filters from '../util/Filters';
 import SearchBar from '../common/SearchBar';
+const confirm = Modal.confirm;
 class OfficeHistory extends React.Component {
  constructor(props) {
       super(props);
@@ -14,38 +15,112 @@ class OfficeHistory extends React.Component {
           recData:[],  //从后台接收到的数据
       }
   }
-  async componentDidMount(){
-        console.log(this.props.goodsIssueHisInfoUrl);
-        var params = '';
-        if(window.location.search)
-          params = window.location.search.substring(1);
-
+  agree(id){
+    var self = this;
+    let params = {id:id}
+    confirm({
+      title: '领用确认',
+      content: '确定领用此物品么？',
+      onOk() {
         $.ajax({
-            url:this.props.goodsIssueHisInfoUrl,
-            type:"get",
+            url:self.props.agreeUrl,
+            type:"post",
             dataType: 'json',
-            data: params,
+            data: JSON.stringify(params),
             contentType : 'application/json',
             success:function(data){
-                if(data.status>0){
-                  var data=data.data;
-                  for(var i in data){
-                      data[i]["key"]=data[i].itemId;   
-                  }                   
-                  this.setState({
-                      recData:data
-                  }); 
+                if(data.data.status>0){
+                  self.fetchData();
                 }else{
-                  recData:""
+                   Modal.error({
+                    title: '错误信息',
+                    content: '领用失败',
+                  });
                 }
-            }.bind(this),
-            error:function(data){
-                Modal.error({
-                  title:'错误信息',
-                  content:data.message,
-                });
+            }.bind(self),
+            error:function(){
+              Modal.error({
+                title: '错误信息',
+                content: '系统不可用',
+              });
             }
         });
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  }
+  deny(id){
+    var self = this;
+    confirm({
+      title: '驳回确认',
+      content: '确定领用此物品么？',
+      onOk() {
+        $.ajax({
+            //url:"/goodsList",
+            url:self.props.denyUrl,
+            type:"post",
+            dataType: 'json',
+            data: JSON.stringify(params),
+            contentType : 'application/json',
+            success:function(data){
+                if(data.data.status>0){
+                  self.fetchData();
+                }else{
+                   Modal.error({
+                    title: '错误信息',
+                    content: '驳回失败',
+                  });
+                }
+            },
+            error:function(){
+              Modal.error({
+                title: '错误信息',
+                content: '系统不可用',
+              });
+            }
+        });
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+
+  }
+  fetchData(){
+      var params = '';
+      if(window.location.search)
+        params = window.location.search.substring(1);
+      $.ajax({
+          url:this.props.goodsIssueHisInfoUrl,
+          type:"get",
+          dataType: 'json',
+          data: params,
+          contentType : 'application/json',
+          success:function(data){
+              if(data.status>0){
+                var data=data.data;
+                for(var i in data){
+                    data[i]["key"]=data[i].itemId;   
+                }                   
+                this.setState({
+                    recData:data
+                }); 
+              }else{
+                recData:""
+              }
+          }.bind(this),
+          error:function(data){
+              Modal.error({
+                title:'错误信息',
+                content:data.message,
+              });
+          }
+      });
+  }
+  async componentDidMount(){
+      this.fetchData();
   }
   render() { 
     var filterData = new Filters().filter(this.state.recData);
@@ -78,6 +153,18 @@ class OfficeHistory extends React.Component {
         filters: filterData.count,
         sorter: (a, b) => (new Sorter().sort(a.count, b.count)),
         onFilter: (value, record) => record.count.indexOf(value) === 0
+      },{
+        title: '申请时间',
+        dataIndex: 'applyTime',
+        key:'applyTime',
+        filters: filterData.applyTime,
+        sorter: (a, b) => (new Sorter().sort(a.applyTime, b.applyTime)),
+        onFilter: (value, record) => record.applyTime.indexOf(value) === 0
+      },{
+        title: '操作',
+        dataIndex: 'state',
+        key:'state',
+        render: (text,record)=>{if(record.state == 1) return (<span>已领用</span>);return (<div><Button onClick={this.agree.bind(this, record.id)} type="primary" style={{marginRight:10}}>同意</Button><Button onClick={this.deny.bind(this, record.id)} >驳回</Button></div>)}
       },{
         title: '领用时间',
         dataIndex: 'time',

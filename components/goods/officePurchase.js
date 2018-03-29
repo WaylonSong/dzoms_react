@@ -49,6 +49,7 @@ class OfficePurchase extends React.Component {
         });
   }
   action(index){
+    var self = this;
      if(this.result.num>0){
         $.ajax({
             //url:"/goodsList",
@@ -60,6 +61,7 @@ class OfficePurchase extends React.Component {
             success:function(data){
                 if(data.data.status>0){
                   // window.location.href=this.props.jumpUrl
+                  self.componentDidMount();
                 }else{
                    Modal.error({
                     title: '错误信息',

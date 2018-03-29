@@ -47,7 +47,7 @@ module.exports = function(app) {
 				"itemId": 0,
 				"itemName": "零件1",
 				"itemType": "SYP7-2017-06",
-				"itemTotalNum": "250",
+				"itemTotalNum": "550",
 				"itemPurchasingPrice": "20",
 				"itemUnit": "个",
 				"itemRemarks": "零件1备注信息"
@@ -248,13 +248,16 @@ module.exports = function(app) {
          "itemName":"铅笔",
          "department":"信息部",
          "count":"5",
-					time: "2018-01-01 12:12:12"
+         "state": 0,
+		 applyTime: "2017-01-01 12:12:12",
          },
          {"id":12,
          "personName":"黄嵩凯1",
          "itemName":"橡皮",
          "department":"运营部",
          "count":"5",
+         "state": 1,
+		 applyTime: "2017-01-01 12:12:12",
 					time: "2018-01-01 12:12:12"
          },
           ] 
