@@ -49,6 +49,14 @@ class Goods extends React.Component {
   }
   action(index){
      let {itemId, num} = this.state.recData[index];
+     if(!(num && num != 0)){
+        Modal.error({
+          title: '错误',
+          content: ("领用数量不能为0!"),
+          onOk() {},
+        });
+        return;
+     }
      let reqData = {num, itemId};
      var self=this;
      $.ajax({
