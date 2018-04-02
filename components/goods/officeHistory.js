@@ -160,7 +160,8 @@ class OfficeHistory extends React.Component {
         key:'applyTime',
         filters: filterData.applyTime,
         sorter: (a, b) => (new Sorter().sort(a.applyTime, b.applyTime)),
-        onFilter: (value, record) => record.applyTime.indexOf(value) === 0
+        onFilter: (value, record) => record.applyTime.indexOf(value) === 0,
+        render:(text)=>{if(text=="null")return "-";return text;}
       },{
         title: '操作',
         dataIndex: 'state',
@@ -172,7 +173,8 @@ class OfficeHistory extends React.Component {
         key:'time',
         filters: filterData.time,
         sorter: (a, b) => (new Sorter().sort(a.time, b.time)),
-        onFilter: (value, record) => record.time.indexOf(value) === 0
+        onFilter: (value, record) => record.time.indexOf(value) === 0,
+        render:(text)=>{if(text=="null")return "-";return text;}
       }
     ];       
     return (
