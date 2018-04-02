@@ -1,6 +1,8 @@
 /*
   组件功能：准备筛选的数据项
 */
+import StringUtil from './StringUtil';
+
 class Filters{
     filter(recData){
         var filterData={}; //要进行筛选的数据
@@ -17,9 +19,10 @@ class Filters{
             }                           
           });
         }
+        console.log(filterData)
         for(var i in filterData){
           for(var j in filterData[i]){
-              filterData[i][j]={text:filterData[i][j],value:filterData[i][j]};
+              filterData[i][j]={text:StringUtil.safeGet(filterData[i][j]),value:StringUtil.safeGet(filterData[i][j])};
           }    
         }
         return filterData;

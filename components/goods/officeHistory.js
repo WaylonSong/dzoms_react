@@ -133,7 +133,8 @@ class OfficeHistory extends React.Component {
         key:'personName',
         filters: filterData.personName,
         sorter: (a, b) => (new Sorter().sort(a.personName, b.personName)),
-        onFilter: (value, record) => record.personName.indexOf(value) === 0
+        onFilter: (value, record) => record.personName.indexOf(value) === 0,
+        render:(text)=>{return StringUtil.safeGet(text)}
       }, {
         title: '部门',
         dataIndex: 'department',
@@ -148,14 +149,16 @@ class OfficeHistory extends React.Component {
         key:'itemName',
         filters: filterData.itemName,
         sorter: (a, b) => (new Sorter().sort(a.itemName, b.itemName)),
-        onFilter: (value, record) => record.itemName.indexOf(value) === 0
+        onFilter: (value, record) => record.itemName.indexOf(value) === 0,
+        render:(text)=>{return StringUtil.safeGet(text)}
       }, {
         title: '领取数量',
         dataIndex: 'count',
         key:'count',
         filters: filterData.count,
         sorter: (a, b) => (new Sorter().sort(a.count, b.count)),
-        onFilter: (value, record) => record.count.indexOf(value) === 0
+        onFilter: (value, record) => record.count.indexOf(value) === 0,
+        render:(text)=>{return StringUtil.safeGet(text)}
       },{
         title: '申请时间',
         dataIndex: 'applyTime',

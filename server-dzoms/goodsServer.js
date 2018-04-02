@@ -169,6 +169,7 @@ module.exports = function(app) {
           "status":1,
           "message":"查询成功",
           "data":[
+          {"id":20,"personName":"admin","itemName":"固定电话","idNumber":null,"carId":null,"count":0,"state":0,"applyTime":"null","time":"2018-03-30 15:23:00.0"},{"id":21,"personName":"admin","itemName":"固定电话","idNumber":null,"carId":null,"count":0,"state":0,"applyTime":"null","time":"2018-03-30 15:23:11.0"},{"id":22,"personName":"admin","itemName":"固定电话","idNumber":"230107198611032319","carId":"黑ATS915","count":0,"state":1,"applyTime":"null","time":"2018-03-30 15:26:58.0"},{"id":23,"personName":"admin","itemName":"固定电话","idNumber":null,"carId":null,"count":0,"state":0,"applyTime":"null","time":"2018-03-30 15:33:12.0"},
          {"id":11,
          "personName":"黄嵩凯",
          "itemName":"座套",
