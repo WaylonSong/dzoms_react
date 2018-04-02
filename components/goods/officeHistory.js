@@ -29,7 +29,7 @@ class OfficeHistory extends React.Component {
             data: JSON.stringify(params),
             contentType : 'application/json',
             success:function(data){
-                if(data.data.status>0){
+                if(data&&data.status > 0){
                   self.fetchData();
                 }else{
                    Modal.error({
@@ -65,7 +65,7 @@ class OfficeHistory extends React.Component {
             data: JSON.stringify(params),
             contentType : 'application/json',
             success:function(data){
-                if(data.data.status>0){
+                if(data&&data.status > 0){
                   self.fetchData();
                 }else{
                    Modal.error({

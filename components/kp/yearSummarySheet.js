@@ -153,7 +153,7 @@ class YearSummarySheet extends  React.Component{
     return (
       <div style={{marginBottom:100}}>
           <div id="header">
-              <h2>月度绩效考核汇总表</h2>
+              <h2>年度绩效考核汇总表</h2>
           </div>
           <div style={{marginLeft:200, marginBottom:10}}>
                 <Button type="primary" style={{width:200}}><a href={this.props.exportUrl} target="_blank">导出</a></Button>
