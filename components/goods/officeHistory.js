@@ -53,6 +53,7 @@ class OfficeHistory extends React.Component {
   }
   deny(id){
     var self = this;
+    let params = {id:id}
     confirm({
       title: '驳回确认',
       content: '确定领用此物品么？',
