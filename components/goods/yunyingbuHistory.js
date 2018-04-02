@@ -7,6 +7,7 @@ import { Table, Modal} from 'antd';
 import Sorter from '../util/Sorter';
 import Filters from '../util/Filters';
 import SearchBar from '../common/SearchBar';
+import StringUtil from '../util/StringUtil';
 class YunyingbuHistory extends React.Component {
  constructor(props) {
       super(props);
@@ -63,35 +64,40 @@ class YunyingbuHistory extends React.Component {
         key:'itemName',
         filters: filterData.itemName,
         sorter: (a, b) => (new Sorter().sort(a.itemName, b.itemName)),
-        onFilter: (value, record) => record.itemName.indexOf(value) === 0
+        onFilter: (value, record) => record.itemName.indexOf(value) === 0,
+        render:(text)=>{return StringUtil.safeGet(text)}
       }, {
         title: '身份证号码',
         dataIndex: 'idNumber',
         key:'idNumber',
         filters: filterData.idNumber,
         sorter: (a, b) => (new Sorter().sort(a.idNumber, b.idNumber)),
-        onFilter: (value, record) => record.idNumber.indexOf(value) === 0
+        onFilter: (value, record) => record.idNumber.indexOf(value) === 0,
+        render:(text)=>{return StringUtil.safeGet(text)}
       },{
         title: '车牌号',
         dataIndex: 'carId',
         key:'carId',
         filters: filterData.carId,
         sorter: (a, b) => (new Sorter().sort(a.carId, b.carId)),
-        onFilter: (value, record) => record.carId.indexOf(value) === 0
+        onFilter: (value, record) => record.carId.indexOf(value) === 0,
+        render:(text)=>{return StringUtil.safeGet(text)}
       },{
         title: '领取数量',
         dataIndex: 'count',
         key:'count',
         filters: filterData.count,
         sorter: (a, b) => (new Sorter().sort(a.count, b.count)),
-        onFilter: (value, record) => record.count.indexOf(value) === 0
+        onFilter: (value, record) => record.count.indexOf(value) === 0,
+        render:(text)=>{return StringUtil.safeGet(text)}
       },{
         title: '领用时间',
         dataIndex: 'time',
         key:'time',
         filters: filterData.time,
         sorter: (a, b) => (new Sorter().sort(a.time, b.time)),
-        onFilter: (value, record) => record.time.indexOf(value) === 0
+        onFilter: (value, record) => record.time.indexOf(value) === 0,
+        render:(text)=>{return StringUtil.safeGet(text)}
       }
     ];       
     return (

@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { Table, Modal, Button} from 'antd';
 import Sorter from '../util/Sorter';
 import Filters from '../util/Filters';
+import StringUtil from '../util/StringUtil';
 import SearchBar from '../common/SearchBar';
 const confirm = Modal.confirm;
 class OfficeHistory extends React.Component {
@@ -139,7 +140,8 @@ class OfficeHistory extends React.Component {
         key:'department',
         filters: filterData.department,
         sorter: (a, b) => (new Sorter().sort(a.department, b.department)),
-        onFilter: (value, record) => record.department.indexOf(value) === 0
+        onFilter: (value, record) => record.department.indexOf(value) === 0,
+        render:(text)=>{return StringUtil.safeGet(text)}
       },{
         title: '物品名称',
         dataIndex: 'itemName',
@@ -161,7 +163,7 @@ class OfficeHistory extends React.Component {
         filters: filterData.applyTime,
         sorter: (a, b) => (new Sorter().sort(a.applyTime, b.applyTime)),
         onFilter: (value, record) => record.applyTime.indexOf(value) === 0,
-        render:(text)=>{if(text=="null")return "-";return text;}
+        render:(text)=>{return StringUtil.safeGet(text)}
       },{
         title: '操作',
         dataIndex: 'state',
@@ -174,7 +176,7 @@ class OfficeHistory extends React.Component {
         filters: filterData.time,
         sorter: (a, b) => (new Sorter().sort(a.time, b.time)),
         onFilter: (value, record) => record.time.indexOf(value) === 0,
-        render:(text)=>{if(text=="null")return "-";return text;}
+        render:(text)=>{return StringUtil.safeGet(text)}
       }
     ];       
     return (
