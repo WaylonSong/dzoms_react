@@ -146,7 +146,7 @@ class Goods extends React.Component {
         title: '领用数量',
         dataIndex: 'num',
         key:'num',
-        render:(text, record, index)=>(<InputNumber min={0} max={10} defaultValue={0} onChange={this.onScoreChange.bind(this,index)} />) 
+        render:(text, record, index)=>(<InputNumber min={0} defaultValue={0} onChange={this.onScoreChange.bind(this,index)} />) 
       },{
         title: '操作',
         render:(text,record,index)=>(<Button onClick={this.action.bind(this,index)}>领用</Button>)
