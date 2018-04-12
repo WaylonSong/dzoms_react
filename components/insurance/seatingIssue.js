@@ -51,7 +51,7 @@ class SeatingIssue extends React.Component {
     e.preventDefault();
     var result={};
     this.props.form.validateFieldsAndScroll((err, values) => {
-      if(this.state.errorMessage=="" && Object.keys(this.seatTypeObj).length !== 0){ //暂时不验证车牌号
+      if(this.state.errorMessage==""){ //暂时不验证车牌号
         if (!err) {
            result=values;
            result.issueType=this.seatTypeObj;
@@ -128,7 +128,7 @@ class SeatingIssue extends React.Component {
       },
     };
     var assueType=(
-        <span><span style={{color:'#F04134'}}>*</span> 发放类型</span>
+        <span>发放类型</span>
     );
     return (
       <div>
