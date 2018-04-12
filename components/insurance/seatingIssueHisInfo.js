@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { Table, Modal} from 'antd';
 import Sorter from '../util/Sorter';
 import Filters from '../util/Filters';
+import SearchBar from '../common/SearchBar';
 class SeatingIssueHisInfo extends React.Component {
  constructor(props) {
       super(props);
@@ -94,10 +95,17 @@ class SeatingIssueHisInfo extends React.Component {
         sorter: (a, b) => (new Sorter().sort(a.dzwz, b.dzwz)),
         onFilter: (value, record) => record.count.indexOf(value) === 0
       }
+      ,{
+        title: '时间',
+        dataIndex: 'createTime',
+        key:'createTime',
+        sorter: (a, b) => (new Sorter().sort(a.createTime, b.createTime)),
+      }
     ];       
     return (
-      <div>
-        <Table  key={this.key++} pagination={false} columns={columns}  dataSource={this.state.recData} />
+      <div style={{width:1200}}>
+        <SearchBar options={this.props.options||[{field:'carNumber', alias:'车牌号'},{field:'employeeId', alias:'员工工号'}]} downloadUrl={this.props.downloadUrl}/>
+        <Table  key={this.key++} pagination={true}  columns={columns}  dataSource={this.state.recData} width={1200}/>
       </div>
     );
   }

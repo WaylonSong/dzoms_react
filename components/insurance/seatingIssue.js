@@ -7,6 +7,7 @@ import { Table, Button, Modal, Form, Input, Icon,Row, Col,DatePicker,Checkbox,In
 import SelectInfo from '../util/SelectInfo';
 import CarNumber from '../util/carNumber';
 import UtilSelect from '../util/Select';
+import Cph from '../util/cph';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
@@ -19,8 +20,6 @@ class SeatingIssue extends React.Component {
   constructor(props) {
        super(props);
        this.state = {
-          recData:"",
-          recCph:[],  //后台请求回来的车牌号数组
           employeeJobNumber:[],
           errorMessage:"",
           objCph:"",
@@ -33,38 +32,14 @@ class SeatingIssue extends React.Component {
       this.seatTypeObj={};
   }
   componentDidMount(){
-    //   var self=this;
-    //   $.ajax({
-    //     type:"get",
-    //     //url: "/employeeJobNumber",
-    //     url:this.props.employeeInfoUrl,
-    //     dataType: 'json',
-    //     contentType : 'application/json',
-    //     success: function(data){           
-    //         var  employeeJobNumber=[]; 
-    //         if(data.status>0){
-    //            data.data.map(function(obj){
-    //               employeeJobNumber.push(obj.employeeName+"-"+obj.employeeId);
-    //            })
-    //            self.setState({
-    //               employeeJobNumber:employeeJobNumber
-    //            });
-    //         }           
-    //     },
-    //     error: function(data){
-    //        alert("失败");
-    //     }
-    // });
+    
   }
   
-  //车牌号处理start
-  objCph(objCph){
-      this.setState({objCph:objCph});
+  onCphChange(value) {
+    var params = {};
+    params['cph'] = value;
+    this.props.form.setFieldsValue(params);
   }
-  errorMessage(errorMessage){
-      this.setState({errorMessage:errorMessage});
-  }
-  //车牌号处理end
 
   onNumChange(type,num) {
       this.seatTypeObj[type]=num;
@@ -77,15 +52,12 @@ class SeatingIssue extends React.Component {
     var result={};
     this.props.form.validateFieldsAndScroll((err, values) => {
       if(this.state.errorMessage=="" && Object.keys(this.seatTypeObj).length !== 0){ //暂时不验证车牌号
-      //if(Object.keys(this.seatTypeObj).length !== 0){
         if (!err) {
            result=values;
-           //console.log(this.seatTypeObj);
            result.issueType=this.seatTypeObj;
-           result.cph=this.state.objCph;
+           console.log(result);
            $.ajax({
               type:"POST",
-              //url: "/test",
               url:this.props.submitUrl,
               data: JSON.stringify(result),
               dataType: 'json',
@@ -95,6 +67,7 @@ class SeatingIssue extends React.Component {
                       Modal.success({
                         title: '提示信息',
                         content: '保存成功！',
+                        onOk:()=>window.location.href = window.location.href,
                       });
                   }else{
                       Modal.error({
@@ -114,17 +87,7 @@ class SeatingIssue extends React.Component {
         return;
       }
     });
-     console.log(result);
   }
-  // genselectRows(){
-  //     var self=this;
-  //     var selectRows=self.state.employeeJobNumber.map(function(item){
-  //         return(                         
-  //             <Option value={item}>{item}</Option>             
-  //         )
-  //     });
-  //     return selectRows;
-  // }
   selectInfoErrorMessage(errorMessage){
       this.setState({
           errorMessage:errorMessage
@@ -133,6 +96,16 @@ class SeatingIssue extends React.Component {
   render() {
      const { getFieldDecorator } = this.props.form;
      const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 6 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 14 },
+      },
+     };
+     const formItemLayout2 = {
       labelCol: {
         xs: { span: 24 },
         sm: { span: 6 },
@@ -161,7 +134,7 @@ class SeatingIssue extends React.Component {
       <div>
           <Form onSubmit={this.handleSubmit.bind(this)}>
             <FormItem
-              {...formItemLayout}
+              {...formItemLayout2}
               label="车牌号码："
               hasFeedback
             >
@@ -170,9 +143,7 @@ class SeatingIssue extends React.Component {
                   required: true, message: '请输入车牌号！',
                 }],
               })(
-                <div>
-                    <CarNumber {...pageUrls} errorMessage={this.errorMessage.bind(this)}  objCph={this.objCph.bind(this)} />
-                </div>
+              <Cph chepaihao={this.props.chepaihao} onChange={this.onCphChange.bind(this)}/>
               )}
             </FormItem>
             <FormItem  
@@ -218,12 +189,11 @@ class SeatingIssue extends React.Component {
                       onChange={this.onemployeeIdChange.bind(this)}
                       filterOption={(input, option) => option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                   >
-                      <Option value="s001-张三">s001-张1</Option>
-                      <Option value="s002-张三">s002-张2</Option>
-                      <Option value="s003-张三">s003-张3</Option>
-                      <Option value="s004-张三">s004-张4</Option>
-                      <Option value="s005-张三">s005-张5</Option>
-                      <Option value="s006-张三">s006-张4</Option>                                           
+                      <Option value="001">001</Option>
+                      <Option value="002">002</Option>
+                      <Option value="003">003</Option>
+                      <Option value="004">004</Option>
+                      <Option value="005">005</Option>
                   </Select>
               )}
             </FormItem>   
