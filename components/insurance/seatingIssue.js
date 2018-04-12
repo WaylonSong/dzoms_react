@@ -29,7 +29,7 @@ class SeatingIssue extends React.Component {
       this.cphId="";    //车牌号ID
       this.cphPrefix=""; //车牌号前缀
       this.seatType=["xzps","xzwz","dzps","dzwz"];
-      this.seatTypeObj={};
+      this.seatTypeObj={xzps:0, xzwz:0, dzps:0, dzwz:0};
   }
   componentDidMount(){
     
