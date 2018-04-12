@@ -15,10 +15,15 @@ class SeatingIssueHisInfo extends React.Component {
       }
   }
   async componentDidMount(){
+        var params = '';
+        if(window.location.search)
+          params = window.location.search.substring(1);
+
         $.ajax({
             url:this.props.seatingIssueHisInfoUrl,
             type:"get",
             dataType: 'json',
+            data:params,
             contentType : 'application/json',
             success:function(data){
                 if(data.status>0){
