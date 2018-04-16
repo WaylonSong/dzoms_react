@@ -121,14 +121,16 @@ class InsuranceList extends React.Component {
         key:'4',
         filters: filterData.zbe,
         sorter: (a, b) => (new Sorter().sort(a.zbe, b.zbe)),
-        onFilter: (value, record) => record.zbe.indexOf(value) === 0
+        onFilter: (value, record) => record.zbe.indexOf(value) === 0,
+        render: (text)=>{return Number(text).toFixed(2)}
       },{
         title: '总保费',
         dataIndex: 'zbf',
         key:'5',
         filters:filterData.zbf,
         sorter: (a, b) => (new Sorter().sort(a.zbf, b.zbf)),
-        onFilter: (value, record) => record.zbf.indexOf(value) === 0
+        onFilter: (value, record) => record.zbf.indexOf(value) === 0,
+        render: (text)=>{return Number(text).toFixed(2)}
       },{
         title: '录入时间',
         dataIndex: 'lrsj',

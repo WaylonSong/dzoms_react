@@ -123,6 +123,7 @@ class Cph extends React.Component{
               dataSource={this.state.dataSource}
               style={{ width: 200 }}
               onChange={this.numberChange.bind(this)}
+              value={this.props.value&&this.props.value.substring(2)}
             />
           </InputGroup>
 

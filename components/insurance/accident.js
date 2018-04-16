@@ -6,6 +6,8 @@ import ReactDOM from 'react-dom';
 import { Table, Button, Modal, Form, Input, Icon,Row, Col,DatePicker,Switch} from 'antd';
 import Sorter from '../util/Sorter';
 import Filters from '../util/Filters';
+import AccidentSearchBar from './accidentSearchBar';
+import queryString from 'query-string'
 const FormItem = Form.Item;
 const { MonthPicker, RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
@@ -33,9 +35,14 @@ class Accident extends React.Component {
   }
   componentDidMount(){
         var self=this;
+        var self=this;
+        var params = '';
+        if(window.location.search)
+          params = window.location.search.substring(1);
         $.ajax({
             url:self.props.accidentListInfoUrl,
             type:"get",
+            data:params,
             dataType: 'json',
             contentType : 'application/json',
             success:function(data){
@@ -67,24 +74,6 @@ class Accident extends React.Component {
      this.setState({
           selectedTime:dateString
      });
-  }
-
-  search(){
-      var self=this;
-      var selectedTime=self.state.selectedTime;
-      $.get(self.props.accidentListInfoUrl+"?selectedTime="+selectedTime,function(data){
-          if (data.status > 0) {
-            var data = data.data;
-            for (var i = 0; i < data.length; i++) {
-              data[i]["key"] = data[i].id;
-            }
-            self.setState({
-              recData: data
-            });
-          } else {
-            recData: ""
-          }
-      });
   }
   // linkDetails(e,index){
   //     console.log(e.target.value,index);
@@ -147,7 +136,8 @@ class Accident extends React.Component {
         width:85,
         filters:filterData.pfje,
         sorter: (a, b) => (new Sorter().sort(a.pfje, b.pfje)),
-        onFilter: (value, record) => record.pfje.indexOf(value) === 0
+        onFilter: (value, record) => record.pfje.indexOf(value) === 0,
+        render: (text)=>{return Number(text).toFixed(2)}
       }
       ,{
         title: '结案日期',
@@ -439,7 +429,7 @@ class Accident extends React.Component {
         onFilter: (value, record) => record.cpxh.indexOf(value) === 0
       }
       ,{
-        title: '创建时间',
+        title: '上传时间',
         dataIndex: 'create_date',
         key:'create_date',
         width:90,
@@ -462,15 +452,7 @@ class Accident extends React.Component {
     const hasSelected = selectedRowKeys.length > 0;  
     return (
       <div>
-        <div style={{position:'relative',float:'right',marginBottom:'10px'}}>
-          <div style={{position:'absolute',top:'-55px',right:'65px'}} onClick={this.download.bind(this)}>
-              <Icon type="download" style={{fontSize:'18px'}} />下载             
-          </div>
-          <div>
-             <MonthPicker onChange={this.onTimeChange.bind(this)}  format={monthFormat}  placeholder="日期选择" />
-             <Button onClick={this.search.bind(this)}>搜索</Button>
-          </div>
-        </div>
+        <AccidentSearchBar cphUrl={this.props.chepaihao} options={this.props.options||[{field:'id', alias:'身份证'}, {field:'name', alias:'名称2'}]} downloadUrl={this.props.downloadUrl}/>
         <div style={{clear:'both'}}>
             {switchBox}
         </div>
