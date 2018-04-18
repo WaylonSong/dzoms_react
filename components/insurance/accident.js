@@ -430,12 +430,12 @@ class Accident extends React.Component {
       }
       ,{
         title: '上传时间',
-        dataIndex: 'create_date',
-        key:'create_date',
+        dataIndex: 'createTime',
+        key:'createTime',
         width:90,
-        filters:filterData.create_date,
-        sorter: (a, b) => (new Sorter().sort(a.create_date, b.create_date)),
-        onFilter: (value, record) => record.create_date.indexOf(value) === 0
+        filters:filterData.createTime,
+        sorter: (a, b) => (new Sorter().sort(a.createTime, b.createTime)),
+        onFilter: (value, record) => record.createTime.indexOf(value) === 0
       } 
   ];
     var self=this;
