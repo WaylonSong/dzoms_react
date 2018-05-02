@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 import { Table, Button, Modal, Form, Input, Icon,Row, Col,DatePicker} from 'antd';
 import Sorter from '../util/Sorter';
 import Filters from '../util/Filters';
-import SearchBar from '../common/SearchBar';
+import InsuranceSearchBar from './insuranceSearchBar';
 import queryString from 'query-string'
 const FormItem = Form.Item;
 const { MonthPicker, RangePicker } = DatePicker;
@@ -151,7 +151,7 @@ class InsuranceList extends React.Component {
           <MonthPicker onChange={this.onTimeChange.bind(this)}  format={monthFormat}  placeholder="日期选择"/>
           <Button onClick={this.search.bind(this)}>搜索</Button>
         </div>*/}
-        <SearchBar options={this.props.options||[{field:'id', alias:'身份证'}, {field:'name', alias:'名称2'}]} downloadUrl={this.props.downloadUrl}/>
+        <InsuranceSearchBar cphUrl={this.props.chepaihao} downloadUrl={this.props.downloadUrl}/>
         <Table style={{clear:'both'}} key={this.key++}  columns={columns}  dataSource={this.state.recData} scroll={{ x: 1300}} />
       </div>
     );

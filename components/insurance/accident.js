@@ -259,7 +259,8 @@ class Accident extends React.Component {
         width:85,
         filters:filterData.bf,
         sorter: (a, b) => (new Sorter().sort(a.bf, b.bf)),
-        onFilter: (value, record) => record.bf.indexOf(value) === 0
+        onFilter: (value, record) => record.bf.indexOf(value) === 0,
+        render: (text)=>{return Number(text).toFixed(2)}
       }
       ,{
         title: '事故处理方式',
@@ -331,7 +332,8 @@ class Accident extends React.Component {
         width:85,
         filters:filterData.gsje,
         sorter: (a, b) => (new Sorter().sort(a.gsje, b.gsje)),
-        onFilter: (value, record) => record.gsje.indexOf(value) === 0
+        onFilter: (value, record) => record.gsje.indexOf(value) === 0,
+        render: (text)=>{return Number(text).toFixed(2)}
       },{
         title: '估计赔款',
         dataIndex: 'gjpk',
@@ -339,7 +341,9 @@ class Accident extends React.Component {
         width:85,
         filters:filterData.gjpk,
         sorter: (a, b) => (new Sorter().sort(a.gjpk, b.gjpk)),
-        onFilter: (value, record) => record.gjpk.indexOf(value) === 0
+        onFilter: (value, record) => record.gjpk.indexOf(value) === 0,
+        render: (text)=>{return Number(text).toFixed(2)}
+        
       },{
         title: '报案人',
         dataIndex: 'bar',
