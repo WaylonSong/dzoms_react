@@ -11,16 +11,9 @@ const Option = Select.Option;
 const Search = Input.Search;
 const pageSize = 20;
 const { RangePicker } = DatePicker
-const ColProps = {
-  xs: 24,
-  sm: 12,
-  style: {
-    marginBottom: 16,
-  },
-}
 const formItemLayout = {
-        /*labelCol: { span: 3 },
-        wrapperCol: { span: 6 },*/
+        /*labelCol: { span: 14 },
+        wrapperCol: { span: 14 },*/
     };
 const InsuranceSearchBar = ({
   options,
@@ -108,15 +101,22 @@ const InsuranceSearchBar = ({
     <Row gutter={24}>
       <Form layout="inline" style={{marginBottom:20}}>
       		<FormItem
-                {...formItemLayout}
             >
                 {getFieldDecorator('cph', {initialValue:query['cph']})(
         		<Cph chepaihao={cphUrl} value={query['cph']}/>
                 )}
             </FormItem>
-            <FormItem style={{marginLeft:-100}}
-                label="上传日期:"
+            <FormItem 
+                label="保单号:"
+                style={{marginLeft:-100,width:210}}
                 {...formItemLayout}
+            >
+                {getFieldDecorator('bdh', {initialValue:query['bdh']})(
+              <Input style={{width:'119%'}}/>
+            )}
+            </FormItem>
+            <FormItem
+                label="上传日期:"
             >
                 {getFieldDecorator('createTime', {initialValue:query['createTime']&&query['createTime'].map((i)=>{return moment(i)})||''})(
               <RangePicker style={{ width: '100%' }} size="large" onChange={handleChange('createTime')}/>
@@ -124,7 +124,6 @@ const InsuranceSearchBar = ({
             </FormItem>
             <FormItem
                 label="保险止期:"
-                {...formItemLayout}
             >
                 {getFieldDecorator('bxzq', {initialValue:query['bxzq']&&query['bxzq'].map((i)=>{return moment(i)})||''})(
               <RangePicker style={{ width: '100%' }} size="large" onChange={handleChange('bxzq')}/>
