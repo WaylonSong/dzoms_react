@@ -19,7 +19,7 @@ class Filters{
             }                           
           });
         }
-        console.log(filterData)
+        // console.log(filterData)
         for(var i in filterData){
           for(var j in filterData[i]){
               filterData[i][j]={text:StringUtil.safeGet(filterData[i][j]),value:StringUtil.safeGet(filterData[i][j])};

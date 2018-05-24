@@ -61,7 +61,7 @@ class YunyingbuIssue extends React.Component {
   async componentDidMount(){
     this.loadGoodsList();
   }
-  showAddModal(index,value){
+  showAddModal(record,value){
     if(this.state.cph.length < 3){
       Modal.error({
         title: '错误',
@@ -69,8 +69,8 @@ class YunyingbuIssue extends React.Component {
       });
       return;
     }
-    var itemId=this.state.recData[index].itemId;
-    this.itemId=itemId;  
+    var itemId = record.itemId;
+    this.itemId = itemId;  
     let self = this;
     $.get(this.props.driversAndHistory||"/driversAndHistory", { vehicle: this.state.cph, itemId: itemId }, function(data){
       self.setState({
@@ -198,7 +198,7 @@ class YunyingbuIssue extends React.Component {
         onFilter: (value, record) => record.itemPurchasingPrice.indexOf(value) === 0
       },{
         title: '领用',
-        render:(text,record,index)=>(<Button onClick={this.showAddModal.bind(this,index)}>领用</Button>)
+        render:(text,record,index)=>(<Button onClick={this.showAddModal.bind(this,record)}>领用</Button>)
       }  
     ]; 
     var subColumns = []
@@ -250,8 +250,9 @@ class YunyingbuIssue extends React.Component {
 
     return (
       <div>
-        <div><div style={{float:'left',marginTop:7, marginLeft:10, marginRight:0}}>请先填入领用车牌号：</div><div><Cph chepaihao={this.props.chepaihao} onChange={this.cphChange.bind(this)}/></div></div>
-        <Table  key='yunyingbuIssue' size="default" columns={columns}  pagination={false} dataSource={this.state.recData} loading={this.state.loading}/>
+        <div><div style={{float:'left',marginTop:7, marginLeft:10, marginRight:0}}>请先填入领用车牌号：</div>
+        <div><Cph chepaihao={this.props.chepaihao} value={this.state.cph} onChange={this.cphChange.bind(this)}/></div></div>
+        <Table  key='yunyingbuIssue' size="default" columns={columns}  pagination={true} dataSource={this.state.recData} loading={this.state.loading}/>
         {this.state.visible&&
         <Modal
           width={1000}

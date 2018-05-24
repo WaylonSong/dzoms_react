@@ -135,12 +135,12 @@ class OfficePurchase extends React.Component {
         title: '采购数量',
         dataIndex: 'num',
         key:'num',
-        render:(text, record, index)=>(<InputNumber min={1} defaultValue={0} onChange={this.onScoreChange.bind(this,index)} />) 
+        render:(text, record, index)=>(<InputNumber min={1} value={text||1} onChange={this.onScoreChange.bind(this,index)} />) 
       },{
         title: '备注',
         dataIndex: 'remark',
         key:'remark',
-        render:(text, record, index)=>(<TextArea  autosize={{ minRows: 1}}  onChange={this.onRemarkChange.bind(this,index)} />) 
+        render:(text, record, index)=>(<TextArea  autosize={{ minRows: 1}} value={text||''} onChange={this.onRemarkChange.bind(this,index)} />) 
       },{
         title: '入库',
         render:(text,record,index)=>(<Button onClick={this.action.bind(this,index)}>入库</Button>)

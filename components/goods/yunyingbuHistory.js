@@ -103,7 +103,7 @@ class YunyingbuHistory extends React.Component {
     return (
       <div>
         <SearchBar options={this.props.options||[{field:'carNumber', alias:'车牌号'},{field:'idNumber', alias:'身份证'}, {field:'personName', alias:'姓名'}, {field:'itemName', alias:'物品名称'}]} downloadUrl={this.props.downloadUrl}/>
-        <Table  key={this.key++} pagination={false} columns={columns}  dataSource={this.state.recData} />
+        <Table  key={this.key++} pagination={true} columns={columns}  dataSource={this.state.recData} />
       </div>
     );
   }

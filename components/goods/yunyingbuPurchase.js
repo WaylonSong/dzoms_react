@@ -113,8 +113,8 @@ class YunyingbuPurchase extends React.Component {
                 var data = data.data;
                 for(var i in data){
                     data[i]["key"]=data[i].itemId;   
+                    data[i]["num"]=0;   
                 }  
-                console.log(data);                 
                 self.setState({
                     recData:data
                 }); 
@@ -127,10 +127,16 @@ class YunyingbuPurchase extends React.Component {
           }
       });
   }
-  action(index){
-     let {itemId, num, itemRemarks} = this.state.recData[index];
+  action(record){
+    var newData = [...this.state.recData];
+    var modifying = newData.find((item)=>{return item.itemId == record.itemId});
+     let {itemId, num, itemRemarks, itemTotalNum} = modifying;
      let reqData = {num, itemRemarks, itemId};
       var self=this;
+      if(num < 1){
+        Modal.error({title:"库存数量填写错误", content:"入库数量不能为0！"});
+        return
+      }
      $.ajax({
           //url:"/goodsList",
           url:self.props.goodsPurchaseUrl,
@@ -167,14 +173,13 @@ class YunyingbuPurchase extends React.Component {
           }
       });   
   }
-  onScoreChange(index,value) {
-      //console.log(this.state.recData);
-     // console.log(index,value)
+  onScoreChange(record,value) {
     var newData = [...this.state.recData];
-    newData[index].num = value;
+    var modifying = newData.find((item)=>{return item.itemId == record.itemId});
+    modifying.num = value;
     this.setState({ recData: newData });
   }
-  onRemarkChange(index,value){
+  onRemarkChange(record,value){
       var remark;
       if((typeof value=='string')&&value.constructor==String){
         remark = value;
@@ -183,21 +188,13 @@ class YunyingbuPurchase extends React.Component {
         remark = value.target.value;
       }
       var newData = [...this.state.recData];
-      newData[index].itemRemarks = remark;
+      var modifying = newData.find((item)=>{return item.itemId == record.itemId});
+      modifying.itemRemarks = remark;
       this.setState({ recData: newData });
   }
   //可编辑框 onchange
-  onCellChange(index, value){
-    //console.log(index,value);
-    //库存改完值之后更新页面
-    var recData=this.state.recData;
-    recData[index].itemTotalNum=value;
-    this.setState({
-        recData:recData
-    });
-  }
+  
   render() { 
-    console.log()
     var filterData = new Filters().filter(this.state.recData);
     var columns = [
       {
@@ -219,15 +216,6 @@ class YunyingbuPurchase extends React.Component {
         dataIndex: 'itemTotalNum',
         key:'itemTotalNum',
         sorter: (a, b) => (new Sorter().sort(a.itemTotalNum, b.itemTotalNum)),
-        /*render: (text, record, index) => (
-          <EditableCell
-            recData={this.state.recData}
-            {...pageUrls}
-            value={text}
-            index={index}
-            onChange={this.onCellChange.bind(this,index)}
-          />
-        )*/
       },{
         title: '单价',
         dataIndex: 'itemPurchasingPrice',
@@ -239,22 +227,22 @@ class YunyingbuPurchase extends React.Component {
         title: '采购数量',
         dataIndex: 'num',
         key:'num',
-        render:(text, record, index)=>(<InputNumber min={0} defaultValue={0} onChange={this.onScoreChange.bind(this,index)} />) 
+        render:(text, record)=>(<InputNumber min={0} value={text} onChange={this.onScoreChange.bind(this, record)} />) 
       },
       {
         title: '备注',
         dataIndex: 'itemRemarks',
         key:'itemRemarks',
-        render:(text, record, index)=>(<TextArea  autosize={{ minRows: 1}} defaultValue={text} onChange={this.onRemarkChange.bind(this,index)} />) 
+        render:(text, record)=>{return <TextArea  autosize={{ minRows: 1}} value={text} onChange={this.onRemarkChange.bind(this, record)} />} 
       },
       {
         title: '采购',
-        render:(text,record,index)=>(<Button onClick={this.action.bind(this,index)}>入库</Button>)
+        render:(text,record)=>(<Button onClick={this.action.bind(this, record)}>入库</Button>)
       }  
     ];       
     return (
       <div>
-        <Table bordered key={this.key++}  columns={columns} pagination={false} dataSource={this.state.recData} />
+        <Table bordered key={this.key++}  columns={columns} pagination={true} dataSource={this.state.recData} />
       </div>
     );
   }
