@@ -34,7 +34,6 @@ class AppModal extends React.Component {
     }
     //修改
     showUpdateModal(type,id){
-      console.log(type,id);
       var recData=this.props.recData;  
       if(id.length>1){
           Modal.error({
@@ -51,7 +50,6 @@ class AppModal extends React.Component {
       }
       for(var i in recData){
           if(id[0]==recData[i].id){
-              //console.log(i)
             var updateData=this.props.form.setFields({
                   itemName:{
                       value:recData[i].itemName,
@@ -158,7 +156,6 @@ class AppModal extends React.Component {
       for (var i in id) {
           tableData["id"] = id[i];
       }
-      console.log(tableData);
       //后台处理  
       var self=this;
         $.ajax({
@@ -205,7 +202,6 @@ class AppModal extends React.Component {
                         });                      
                      }                  
                   }else{
-                       console.log(data)
                       if(type=="put"){
                           Modal.error({
                             title: '错误信息',
@@ -328,7 +324,6 @@ class GoodsManagement extends React.Component {
             success:function(data){            
                 if(data.status>0){
                   var data=data.data;
-                  console.log(data)
                   for(var i=0;i<data.length;i++){
                       data[i]["key"]=data[i].id;  
                       var itemState=[];
@@ -357,7 +352,6 @@ class GoodsManagement extends React.Component {
   }
   transferMsg(recData) {
     // console.log("transferMsg");
-    console.log(recData);
     this.setState({
       recData:recData,
       selectedRowKeys:[]
@@ -369,7 +363,6 @@ class GoodsManagement extends React.Component {
     // this.setState({selectedRowKeys});
     // console.log(selectedRowKeys);
     this.setState({selectedRowKeys});
-    console.log(selectedRowKeys);
     return selectedRowKeys;
   }
 
@@ -381,7 +374,6 @@ class GoodsManagement extends React.Component {
         this.keyPairs[index].inputs[seq] = value;
       else
         this.keyPairs[index].inputs[seq] = value.target.value;
-        console.log(this.keyPairs);
   }
 
   render() {
@@ -438,7 +430,7 @@ class GoodsManagement extends React.Component {
             recData={this.state.recData}  transferMsg={recData => this.transferMsg(recData)} />         
           <span style={{ marginLeft: 8 }}>{hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}</span>
         </div>   
-        <Table key={this.key++} pagination={false} rowSelection={rowSelection} columns={columns} onChange={this.onChange.bind(this)}  dataSource={this.state.recData} />
+        <Table key={this.key++} pagination={true} rowSelection={rowSelection} columns={columns} onChange={this.onChange.bind(this)}  dataSource={this.state.recData} />
       </div>
     );
   }
