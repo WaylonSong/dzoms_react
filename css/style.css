@@ -95,3 +95,6 @@ div.ant-modal-body div.ant-row{
 .ant-table table {
 	line-height: 16px;	
 }
+.ant-table-pagination {
+	float: left !important
+}
