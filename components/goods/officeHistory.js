@@ -185,7 +185,7 @@ class OfficeHistory extends React.Component {
     return (
       <div>
         <SearchBar options={this.props.options||[{field:'personName', alias:'姓名'}, {field:'department', alias:'部门'}]} downloadUrl={this.props.downloadUrl}/>
-        <Table  key={this.key++} pagination={false} columns={columns}  dataSource={this.state.recData} />
+        <Table  key={this.key++} pagination={true} columns={columns}  dataSource={this.state.recData} />
       </div>
     );
   }
