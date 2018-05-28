@@ -33,6 +33,7 @@ class Goods extends React.Component {
                 var data = data.data;
                 for(var i in data){
                     data[i]["key"]=data[i].itemId;   
+                    data[i]["num"]=0;   
                 }  
                 console.log(data);                 
                 self.setState({
@@ -47,15 +48,17 @@ class Goods extends React.Component {
           }
       });
   }
-  action(index){
-     let {itemId, num} = this.state.recData[index];
-     if(!(num && num != 0)){
-        Modal.error({
-          title: '错误',
-          content: ("领用数量不能为0!"),
-          onOk() {},
-        });
-        return;
+  action(record){
+     var newData = [...this.state.recData];
+     var modifying = newData.find((item)=>{return item.itemId == record.itemId});
+     let {itemId, num, itemTotalNum} = modifying;
+     console.log(num)
+     if(num < 1){
+        Modal.error({title:"库存数量填写错误", content:"领用数量不能为0！"});
+        return
+     }else if(num > itemTotalNum){
+        Modal.error({title:"领用数量填写错误", content:"领用数量不能大于库存数量！"});
+        return
      }
      let reqData = {num, itemId};
      var self=this;
@@ -103,14 +106,13 @@ class Goods extends React.Component {
           }
       });   
   }
-  onScoreChange(index,value) {
-      //console.log(this.state.recData);
-     console.log(index,value)
+
+  onScoreChange(record,value) {
     var newData = [...this.state.recData];
-    newData[index].num = value;
+    var modifying = newData.find((item)=>{return item.itemId == record.itemId});
+    modifying.num = value;
     this.setState({ recData: newData });
   }
-
   render() { 
     var filterData = new Filters().filter(this.state.recData);
     var columns = [
@@ -146,15 +148,15 @@ class Goods extends React.Component {
         title: '领用数量',
         dataIndex: 'num',
         key:'num',
-        render:(text, record, index)=>(<InputNumber min={0} defaultValue={0} onChange={this.onScoreChange.bind(this,index)} />) 
+        render:(text, record, index)=>(<InputNumber min={0} value={record.num} onChange={this.onScoreChange.bind(this,record)} />) 
       },{
         title: '操作',
-        render:(text,record,index)=>(<Button onClick={this.action.bind(this,index)}>领用</Button>)
+        render:(text,record,index)=>(<Button onClick={this.action.bind(this,record)}>领用</Button>)
       }  
     ];       
     return (
       <div>
-        <Table  key={this.key++}  pagination={false} columns={columns}  dataSource={this.state.recData} />
+        <Table  key={this.key++}  pagination={true} columns={columns}  dataSource={this.state.recData} />
       </div>
     );
   }

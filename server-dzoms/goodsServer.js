@@ -38,6 +38,13 @@ module.exports = function(app) {
 			"data": []
 		});
 	})
+	app.post(["/goodsIssue"], function(req, res) {
+		res.send({
+			"status": 1,
+			"message": "领用成功",
+			"data": []
+		});
+	})
 
 	app.get(["/goodsList"], function(req, res) {
 		res.send({
