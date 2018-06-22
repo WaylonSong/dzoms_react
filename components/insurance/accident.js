@@ -112,6 +112,14 @@ class Accident extends React.Component {
         sorter: (a, b) => (new Sorter().sort(a.cph, b.cph)),
         onFilter: (value, record) => record.cph.indexOf(value) === 0
       },{
+        title: '分公司',
+        dataIndex: 'dept',
+        key:'dept',
+        width:75,
+        filters:filterData.dept,
+        sorter: (a, b) => (new Sorter().sort(a.dept, b.dept)),
+        onFilter: (value, record) => record.dept.indexOf(value) === 0
+      },{
         title: '案件性质',
         dataIndex: 'ajxz',
         key:'ajxz',
