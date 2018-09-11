@@ -43,7 +43,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test:/\.css$|\.less$/,
+        test:/\.(css|less)$/,
         use:["style-loader","css-loader"]
       },{
         test:/\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$|\.woff2$|\.eot$/,
@@ -54,27 +54,14 @@ module.exports = {
         use: [
           'babel-loader'
         ],
-        /*include: [
-          path.resolve('./entry', "app")
-        ],*/
       },
-      {
-          test: require.resolve('jquery'),
-          use: [{
-              loader: 'expose-loader',
-              options: 'jQuery'
-          },{
-              loader: 'expose-loader',
-              options: '$'
-          }]
-      },
-      {test: require.resolve("jQuery"), use: "expose-loader?jQuery!expose-loader?$"},
+      // {test: require.resolve("jquery"), use: "expose-loader?jQuery!expose-loader?$"},
       {test: require.resolve("react"), use: "expose-loader?React"},
       {test: require.resolve("react-dom"), use: "expose-loader?ReactDOM"},
-      {test: require.resolve("underscore"), use: "expose-loader?_"}
+      // {test: require.resolve("underscore"), use: "expose-loader?_"}
     ]
-  }/*,
-  resolve: { 
+  },
+  /*resolve: { 
      alias: {
         jquery: path.join(__dirname, '/lib/jquery-2.2.1.min.js'),
      }
